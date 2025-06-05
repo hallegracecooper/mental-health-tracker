@@ -1,0 +1,82 @@
+/* css/style.css */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f9f9f9;
+  color: #3B3B3B;
+}
+
+header, footer {
+  background-color: #A3C4F3;
+  color: white;
+  text-align: center;
+  padding: 1em;
+}
+
+main {
+  padding: 1em;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mood-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+button {
+  background-color: #F9E79F;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #F7DC6F;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 1em;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+/* History view styles */
+.entry-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.entry-item {
+  background: white;
+  border-left: 5px solid #A3C4F3;
+  margin-bottom: 1em;
+  padding: 1em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.entry-item p {
+  margin: 0.5em 0;
+}
+
+#view-history {
+  display: inline-block;
+  margin-top: 1em;
+  color: #3B3B3B;
+  text-decoration: none;
+  border-bottom: 1px solid #3B3B3B;
+}
+
+#view-history:hover {
+  color: #666;
+  border-bottom-color: #666;
+}
