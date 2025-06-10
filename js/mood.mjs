@@ -1,5 +1,6 @@
 import { showJournalEntry } from './journal.mjs';
 import { showHistory } from './history.mjs';
+import { showDailyQuote } from './quote.mjs';
 
 export function renderMoodSelection() {
   const app = document.getElementById('app');
@@ -7,6 +8,7 @@ export function renderMoodSelection() {
 
   app.innerHTML = `
     <h2>How are you feeling today?</h2>
+    <div id="quote-container" class="quote-box"></div>
     <div class="mood-buttons">
       ${moods.map(mood => `<button class="mood-btn" data-mood="${mood}">${mood}</button>`).join('')}
     </div>
@@ -20,8 +22,18 @@ export function renderMoodSelection() {
     });
   });
 
-  document.getElementById('view-history').addEventListener('click', (e) => {
-    e.preventDefault();
-    showHistory();
-  });
+  // Bulletproof history link event listener
+  setTimeout(() => {
+    const historyLink = document.getElementById('view-history');
+    if (historyLink) {
+      historyLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showHistory();
+      });
+    } else {
+      console.warn("History link not found in DOM.");
+    }
+  }, 0);
+
+  showDailyQuote();
 }
