@@ -4,19 +4,32 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f9f9f9;
   color: #3B3B3B;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  min-height: 100vh;
 }
 
-header, footer {
+/* Header Styles */
+header {
   background-color: #A3C4F3;
   color: white;
   text-align: center;
   padding: 1em;
+  width: 100%;
 }
 
-main {
-  padding: 1em;
+header h1 {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 1em;
+  font-size: 1.8em;
+}
+
+/* Main Content Container */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1em;
+  min-height: calc(100vh - 200px); /* Account for header and footer height */
 }
 
 /* Quote styles */
@@ -51,23 +64,55 @@ main {
 }
 
 .mood-buttons {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1em;
-  margin-top: 1em;
+  margin: 2em 0;
 }
 
-button {
-  background-color: #F9E79F;
+.mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  padding: 1em;
   border: none;
-  padding: 10px 20px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s;
 }
 
-button:hover {
-  background-color: #F7DC6F;
+.mood-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mood-icon {
+  font-size: 2em;
+}
+
+.mood-text {
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+/* Mood-specific button styles */
+.mood-btn.mood-happy {
+  background: linear-gradient(to bottom right, #FFD700, #FFF8DC);
+}
+
+.mood-btn.mood-sad {
+  background: linear-gradient(to bottom right, #6C5CE7, #a198ed);
+}
+
+.mood-btn.mood-stressed {
+  background: linear-gradient(to bottom right, #FF6B6B, #ffa5a5);
+}
+
+.mood-btn.mood-excited {
+  background: linear-gradient(to bottom right, #00B894, #55ebc3);
 }
 
 textarea {
@@ -204,4 +249,407 @@ textarea {
   outline: none;
   border-color: #A3C4F3;
   box-shadow: 0 0 0 2px rgba(163, 196, 243, 0.2);
+}
+
+/* Mood graph styles */
+.mood-graph {
+  margin-top: 1.5em;
+}
+
+.graph-row {
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+}
+
+.mood-label {
+  width: 80px;
+  font-weight: bold;
+  color: #3B3B3B;
+}
+
+.bar {
+  height: 24px;
+  background-color: #A3C4F3;
+  border-radius: 4px;
+  position: relative;
+  flex-grow: 1;
+  margin-left: 1em;
+}
+
+.bar-count {
+  position: absolute;
+  right: 10px;
+  top: 2px;
+  font-size: 0.9em;
+  color: white;
+}
+
+/* Vertical bar graph */
+.bar-graph {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 200px;
+  margin: 2em auto;
+  gap: 1em;
+  padding: 1em;
+  border-bottom: 1px solid #ccc;
+  max-width: 600px;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  position: relative;
+}
+
+.bar-vertical {
+  width: 100%;
+  min-height: 10px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+  transform-origin: bottom;
+  will-change: transform, box-shadow;
+}
+
+.bar-group:hover .bar-vertical {
+  transform: scaleY(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.bar-label {
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.bar-group:hover .bar-label {
+  transform: scale(1.1);
+}
+
+.bar-name {
+  margin-top: 0.5em;
+  font-size: 0.9em;
+  text-align: center;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.bar-group:hover .bar-name {
+  color: #333;
+}
+
+/* Custom tooltip styles */
+.bar-vertical .tooltip {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background-color: #2C3E50;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 0.85em;
+  font-weight: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(44, 62, 80, 0.2);
+  z-index: 10;
+}
+
+.bar-vertical:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.bar-vertical .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #2C3E50 transparent transparent transparent;
+}
+
+/* Apply mood colors to bars */
+.bar-group.mood-happy .bar-vertical {
+  background-color: #FFD700;
+  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+}
+
+.bar-group.mood-sad .bar-vertical {
+  background-color: #6C5CE7;
+  box-shadow: 0 2px 4px rgba(108, 92, 231, 0.3);
+}
+
+.bar-group.mood-stressed .bar-vertical {
+  background-color: #FF6B6B;
+  box-shadow: 0 2px 4px rgba(255, 107, 107, 0.3);
+}
+
+.bar-group.mood-excited .bar-vertical {
+  background-color: #00B894;
+  box-shadow: 0 2px 4px rgba(0, 184, 148, 0.3);
+}
+
+/* Hover state shadows */
+.bar-group.mood-happy:hover .bar-vertical {
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.bar-group.mood-sad:hover .bar-vertical {
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
+}
+
+.bar-group.mood-stressed:hover .bar-vertical {
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+}
+
+.bar-group.mood-excited:hover .bar-vertical {
+  box-shadow: 0 4px 12px rgba(0, 184, 148, 0.4);
+}
+
+/* Accessibility and Focus Styles */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #4A90E2;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Link Hover Effects */
+a {
+  color: #4A90E2;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #357ABD;
+}
+
+/* Button Animations */
+.mood-btn {
+  transition: all 0.2s ease;
+}
+
+.mood-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mood-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+  .mood-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .info-sections {
+    grid-template-columns: 1fr;
+    gap: 1em;
+  }
+
+  .tagline {
+    font-size: 1em;
+    padding: 0 1em;
+  }
+
+  .mood-btn {
+    padding: 0.8em;
+  }
+
+  .mood-icon {
+    font-size: 1.5em;
+  }
+
+  .mood-text {
+    font-size: 1em;
+  }
+
+  .bar-graph {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 300px;
+    padding: 2em 1em;
+  }
+
+  .bar-group {
+    width: 40%;
+    margin-bottom: 2em;
+  }
+
+  .bar-vertical {
+    min-height: 100px;
+  }
+
+  .quote-box {
+    font-size: 1em;
+    padding: 1em;
+    margin: 1em 0;
+  }
+
+  .journal-form textarea {
+    font-size: 1rem;
+    padding: 1em;
+    min-height: 150px;
+  }
+
+  .bar-vertical .tooltip {
+    font-size: 0.75em;
+    padding: 4px 8px;
+  }
+
+  h2 {
+    font-size: 1.5em;
+    margin: 1em 0;
+  }
+
+  .history-entry {
+    padding: 1em;
+    margin: 1em 0;
+  }
+
+  header h1 {
+    font-size: 1.5em;
+    padding: 0 0.8em;
+  }
+
+  .app-footer p {
+    font-size: 0.9em;
+    padding: 0 0.8em;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid #000;
+  }
+
+  .bar-vertical .tooltip {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .bar-vertical .tooltip::after {
+    border-color: #000 transparent transparent transparent;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+
+/* Welcome Section */
+.welcome-section {
+  text-align: center;
+  margin-bottom: 2em;
+}
+
+.tagline {
+  color: #666;
+  font-size: 1.1em;
+  margin: 0.5em 0 1.5em;
+  font-style: italic;
+}
+
+/* Action Links */
+.action-links {
+  text-align: center;
+  margin: 2em 0;
+}
+
+.action-links a {
+  color: #4A90E2;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.action-links a:hover {
+  color: #357ABD;
+  text-decoration: underline;
+}
+
+.action-links .divider {
+  margin: 0 1em;
+  color: #ccc;
+}
+
+/* Info Sections */
+.info-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2em;
+  margin: 3em 0;
+}
+
+.why-track, .daily-challenge {
+  background: white;
+  padding: 1.5em;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.why-track h3, .daily-challenge h3 {
+  color: #2C3E50;
+  margin-top: 0;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+}
+
+.why-track p, .daily-challenge p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Footer Styles */
+.app-footer {
+  background-color: #A3C4F3;
+  color: white;
+  text-align: center;
+  margin-top: 3em;
+  padding: 2em 0;
+  width: 100%;
+}
+
+.app-footer p {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1em;
 }
